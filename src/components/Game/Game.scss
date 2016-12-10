@@ -1,9 +1,70 @@
+$translucent_bg: rgba(237, 241, 241, .35);
 
+/* HEADER */
 .header {
-  color: #333;
-  font-family: sans-serif;
+  font-family: 'Inconsolata', monospace;
+  font-weight: normal;
+  font-size: 64px;
+  display: inline-block;
+  letter-spacing: 8px;
 }
 
-.placeholder {
-  font-style: italic;
+.blue { color:#2A87D6; }
+.yellow { color: #FFC83F; }
+.green { color: #28D99F; }
+.red { color: #D94044; }
+.pink { color: #FF708E; }
+
+/* BOARD FOR CARDS */
+#boardContainer {
+  background-color: $translucent_bg;
+  display: flex;
+  justify-content: space-between;
+  padding:60px 80px;
+  flex-wrap: wrap;
 }
+
+/* INDIVIDUAL CARDS */
+.card {
+  background-color: #D8D8D8;
+  width:150px;
+  height:150px;
+  display: inline-block;
+  margin-bottom:20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.symbol {
+  font-size:50px;
+  color:#2C3643;
+}
+
+
+/* SCORE AND TIMER CONTAINER */
+#scoreAndTimerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#scoreContainer, #timerContainer {
+  background-color: $translucent_bg;
+  border-radius: 4px;
+  margin-bottom:10px;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+
+  h2 {
+    text-transform: uppercase;
+    margin-bottom:5px;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+#scoreContainer { margin-right: 10px; }

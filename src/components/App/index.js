@@ -1,8 +1,9 @@
 import React from 'react'
 import Game from '../Game/Game'
+import styles from './index.scss';
 
 const App = () => (
-  <div>
+  <div id={styles.root}>
     <Game />
   </div>
 )

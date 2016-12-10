@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import styles from './Timer.scss'
 
@@ -23,7 +23,7 @@ Timer.propTypes = {
   time: React.PropTypes.number,
 }
 
-class TimerContainer extends React.Component {
+export default class TimerContainer extends Component {
 
   constructor(props) {
     super(props)
@@ -52,5 +52,3 @@ class TimerContainer extends React.Component {
     )
   }
 }
-
-export default TimerContainer

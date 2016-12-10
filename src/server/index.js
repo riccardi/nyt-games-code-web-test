@@ -10,7 +10,7 @@ app.use(express.static(path.join(process.cwd(), KYT.PUBLIC_DIR)))
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
-    <html>
+    <html style="background-color:#34485E">
       <head>
         <meta charset="utf-8" />
         <title>Games Web Code Test</title>
@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
       <body>
         <div id='root'></div>
         <script src='${clientAssets.main.js}' type="text/javascript"></script>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
         <link href="${clientAssets.main.css || ''}" rel="stylesheet" type="text/css"/>
       </body>
     </html>
