@@ -61,3 +61,9 @@
   font-size:50px;
   color:#2C3643;
 }
+
+.offBoard {
+  .front, .back {
+    display: none;
+  }
+}
