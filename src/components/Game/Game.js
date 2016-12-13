@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import Timer from '../Timer/Timer'
 import styles from './Game.scss'
+import { store } from '../reduxCode';
 
 export default class Game extends Component {
   constructor(props) {
@@ -43,9 +44,9 @@ export default class Game extends Component {
         </div>
         <div id={styles.boardContainer}>
           {
-            this.state.levels[0].cards.map((card, idx) => {
-              return <div key={idx} className={styles.card}><span className={styles.symbol}>{card}</span></div>
-            })
+            this.state.levels[0].cards.map((card, idx) =>
+              <div key={idx} className={styles.card}><span className={styles.symbol}>{card}</span></div>
+            )
           }
         </div>
       </div>
