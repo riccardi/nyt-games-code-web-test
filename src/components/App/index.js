@@ -1,11 +1,15 @@
 import React from 'react'
 import Game from '../Game/Game'
-import styles from './index.scss';
+import styles from './index.scss'
+import { Provider } from 'react-redux'
+import { store } from '../reduxCode'
 
 const App = () => (
-  <div id={styles.root}>
-    <Game />
-  </div>
+  <Provider store={store}>
+    <div id={styles.root}>
+      <Game />
+    </div>
+  </Provider>
 )
 
 export default App
