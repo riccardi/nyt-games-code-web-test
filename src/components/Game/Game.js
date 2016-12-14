@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import Timer from '../Timer/Timer'
 import styles from './Game.scss'
-import { store, fetchCards, updateScore, flipCard, turnTwoCardsOver } from '../reduxCode'
+import { store, fetchCards, updateScore, flipCard, turnTwoCardsOver, resetCardsClicked, removeMatch } from '../reduxCode'
 import Card from '../Card/Card'
 
 import { connect } from 'react-redux';
@@ -18,7 +18,9 @@ const mapDispatchToProps = (dispatch) => ({
   getCards: () => dispatch(fetchCards()),
   flipCard: (card) => dispatch(flipCard(card)),
   updateScore: () => dispatch(updateScore()),
-  turnTwoCardsOver: () => dispatch(turnTwoCardsOver())
+  resetCardsClicked: () => dispatch(resetCardsClicked()),
+  turnTwoCardsOver: () => dispatch(turnTwoCardsOver()),
+  removeMatch: () => dispatch(removeMatch())
 });
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(
@@ -33,9 +35,20 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
 
     componentDidUpdate() {
 
-      //When user clicks on two cards, they get a second to see them, then they are turned over
+      //After user clicks on two cards
       if (this.props.cardsClicked.length === 2) {
-        setTimeout(this.props.turnTwoCardsOver, 1000);
+        //We must check for a match
+        if(this.props.cards[this.props.cardsClicked[0]].symbol === this.props.cards[this.props.cardsClicked[1]].symbol) {
+          //If there is a match then we remove the cards and update the score
+          setTimeout(() => {
+            this.props.removeMatch();
+            this.props.updateScore();
+          }, 1000);
+        } else {
+          //If not
+          //They get a second to see them, then they are turned over
+          setTimeout(this.props.turnTwoCardsOver, 1000);
+        }
       }
 
     }
