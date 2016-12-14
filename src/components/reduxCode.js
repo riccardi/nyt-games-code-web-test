@@ -8,7 +8,8 @@ const initialState = {
   cards: [{
     id: 0,
     symbol: '',
-    flipped: false
+    flipped: false,
+    offBoard: false
   }],
   score: 0,
   cardsClicked: []
@@ -18,7 +19,10 @@ const initialState = {
 const RECEIVE_CARDS = 'RECEIVE_CARDS';
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const FLIP_CARD = 'FLIP_CARD';
+const RESET_CARDS_CLICKED = 'RESET_CARDS_CLICKED';
 const TURN_TWO_CARDS_OVER = 'TURN_TWO_CARDS_OVER';
+const REMOVE_MATCH = 'REMOVE_MATCH';
+
 
 
 /* REDUCERS */
@@ -49,6 +53,11 @@ function reducer(state = initialState, action) {
       cardsClicked: (state.cardsClicked.includes(action.card.id)) ? state.cardsClicked : [...state.cardsClicked, action.card.id]
     });
 
+    case RESET_CARDS_CLICKED:
+    return Object.assign({}, state, {
+      cardsClicked: []
+    });
+
     case TURN_TWO_CARDS_OVER:
     // console.log('IN TURN_TWO_CARDS_OVER');
     return Object.assign({}, state, {
@@ -62,6 +71,21 @@ function reducer(state = initialState, action) {
       }),
       cardsClicked: []
     });
+
+    case REMOVE_MATCH:
+    return Object.assign({}, state, {
+      cards: state.cards.map(card => {
+        if(card.id !== state.cardsClicked[0] && card.id !== state.cardsClicked[1]) {
+          return card;
+        }
+        return Object.assign({}, card, {
+          offBoard: true
+        })
+      }),
+      cardsClicked: []
+    });
+
+
 
     // case ADD_CARD_CLICKED:
     //   return Object.assign({}, state, {
@@ -121,8 +145,16 @@ export const flipCard = (card) => ({
   card
 });
 
+export const resetCardsClicked = () => ({
+  type: RESET_CARDS_CLICKED
+})
+
 export const turnTwoCardsOver = () => ({
   type: TURN_TWO_CARDS_OVER
+});
+
+export const removeMatch = () => ({
+  type: REMOVE_MATCH
 });
 
 //a function that returns a function that takes dispatch as its argument
@@ -136,7 +168,8 @@ export const fetchCards = () => dispatch => {
       dispatchObj.cards[id] = {
         id: id,
         symbol: card,
-        flipped: false
+        flipped: false,
+        offBoard: false
       }
     });
     // console.log("dispatchObj", dispatchObj);
