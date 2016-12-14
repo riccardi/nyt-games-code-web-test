@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import Timer from '../Timer/Timer'
 import styles from './Game.scss'
-import { store, fetchCards, updateScore, flipCard } from '../reduxCode'
+import { store, fetchCards, updateScore, flipCard, turnTwoCardsOver } from '../reduxCode'
 import Card from '../Card/Card'
 
 import { connect } from 'react-redux';
@@ -17,7 +17,8 @@ const mapStateToProps = ({ cards, score, cardsClicked }) => ({
 const mapDispatchToProps = (dispatch) => ({
   getCards: () => dispatch(fetchCards()),
   flipCard: (card) => dispatch(flipCard(card)),
-  updateScore: () => dispatch(updateScore())
+  updateScore: () => dispatch(updateScore()),
+  turnTwoCardsOver: () => dispatch(turnTwoCardsOver())
 });
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(
@@ -30,18 +31,14 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
       this.props.getCards();
     }
 
-    // componentDidMount() {
-    //   console.log('in componentDidMount');
-    //   axios.get('https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json')
-    //   .then(response => {
-    //     this.setState(response.data);
-    //   })
-    //   .catch(err => console.error(err));
-    // }
-    //
-    // updateScore() {
-    //   this.setState({ score: this.state.score + 1 });
-    // }
+    componentDidUpdate() {
+
+      //When user clicks on two cards, they get a second to see them, then they are turned over
+      if (this.props.cardsClicked.length === 2) {
+        setTimeout(this.props.turnTwoCardsOver, 1000);
+      }
+
+    }
 
     render() {
       return (
@@ -61,7 +58,7 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
           <div id={styles.boardContainer}>
             {
               this.props.cards.map((card, id) =>
-              <Card key={id} card={card} index={id} updateScore={this.props.updateScore} flipCard={this.props.flipCard} />
+              <Card key={id} card={card} index={id} updateScore={this.props.updateScore} flipCard={this.props.flipCard} cardsClicked={this.props.cardsClicked} />
 
             )
           }

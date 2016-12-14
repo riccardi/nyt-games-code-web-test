@@ -11,7 +11,6 @@ const initialState = {
     flipped: false
   }],
   score: 0,
-  // time: 0,
   cardsClicked: []
 };
 
@@ -19,6 +18,7 @@ const initialState = {
 const RECEIVE_CARDS = 'RECEIVE_CARDS';
 const UPDATE_SCORE = 'UPDATE_SCORE';
 const FLIP_CARD = 'FLIP_CARD';
+const TURN_TWO_CARDS_OVER = 'TURN_TWO_CARDS_OVER';
 
 
 /* REDUCERS */
@@ -35,15 +35,32 @@ function reducer(state = initialState, action) {
     });
 
     case FLIP_CARD:
+    // console.log('IN FLIP_CARD');
+    // console.log('action.card', action.card);
     return Object.assign({}, state, {
       cards: state.cards.map(card => {
         if (card.id !== action.card.id) {
           return card;
         }
         return Object.assign({}, card, {
-          flipped: !card.flipped
+          flipped: true
         });
-      })
+      }),
+      cardsClicked: (state.cardsClicked.includes(action.card.id)) ? state.cardsClicked : [...state.cardsClicked, action.card.id]
+    });
+
+    case TURN_TWO_CARDS_OVER:
+    // console.log('IN TURN_TWO_CARDS_OVER');
+    return Object.assign({}, state, {
+      cards: state.cards.map(card => {
+        if (card.id !== state.cardsClicked[0] && card.id !== state.cardsClicked[1]) {
+          return card
+        }
+        return Object.assign({}, card, {
+          flipped: false
+        })
+      }),
+      cardsClicked: []
     });
 
     // case ADD_CARD_CLICKED:
@@ -104,6 +121,10 @@ export const flipCard = (card) => ({
   card
 });
 
+export const turnTwoCardsOver = () => ({
+  type: TURN_TWO_CARDS_OVER
+});
+
 //a function that returns a function that takes dispatch as its argument
 //for thunk middleware which allows us to make async dispatch calls
 export const fetchCards = () => dispatch => {
@@ -118,7 +139,7 @@ export const fetchCards = () => dispatch => {
         flipped: false
       }
     });
-    console.log("dispatchObj", dispatchObj);
+    // console.log("dispatchObj", dispatchObj);
     dispatch(receiveCards(dispatchObj.cards));
   })
   .catch(err => console.error(err));
