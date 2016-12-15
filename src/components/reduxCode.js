@@ -26,6 +26,8 @@ const REMOVE_MATCH = 'REMOVE_MATCH';
 
 
 /* REDUCERS */
+
+/* Think about separating out reducers - one that deals with cards and one that deals with cardsClicked - is this a good idea? */
 function reducer(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_CARDS:
@@ -85,46 +87,6 @@ function reducer(state = initialState, action) {
       cardsClicked: []
     });
 
-
-
-    // case ADD_CARD_CLICKED:
-    //   return Object.assign({}, state, {
-    //     cardsClicked: [...state.cardsClicked, action.card]
-    //   })
-    //
-    // case CHECK_FOR_MATCH:
-    //   if (state.cardsClicked[0] === state.cardsClicked[1]) {
-    //     return Object.assign({}, state, {
-    //       cardsClicked: [],
-    //       score: state.score + 1
-    //     });
-    //   } else {
-    //     return Object.assign({}, state, {
-    //       cardsClicked: []
-    //     });
-    //   }
-
-    // case FLIP_CARD:
-    //   if (state.cardsClicked.length < 2) {
-    //     return Object.assign({}, state, {
-    //       // cards[action.card.index].flipped: !state.cards[action.card.index].flipped,
-    //       cardsClicked: [...state.cardsClicked, action.card]
-    //     })
-    //   } else {
-    //     //see if both cards are a match
-    //     if (cardsClicked[0].symbol === cardsClicked[1].symbol) {
-    //       //if they are then remove them from board
-    //       //add 1 to score
-    //     } else {
-    //       //if they are not
-    //       //flip both cards in cardsClicked over
-    //     }
-    //
-    //     return Object.assign({}, state, {
-    //       cardsClicked: []
-    //     })
-    //   }
-
     default:
     return state;
   }
@@ -163,19 +125,19 @@ export const fetchCards = () => dispatch => {
   axios.get('https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json')
   .then(({data}) => {
 
-    const dispatchObj = receiveCards(data.levels[0].cards);
-    dispatchObj.cards.forEach((card, id) => {
-      dispatchObj.cards[id] = {
-        id: id,
+    const cards = data.levels[0].cards.map((card, idx) => {
+      return {
+        id: idx,
         symbol: card,
         flipped: false,
         offBoard: false
       }
     });
-    // console.log("dispatchObj", dispatchObj);
-    dispatch(receiveCards(dispatchObj.cards));
+
+    dispatch(receiveCards(cards));
   })
   .catch(err => console.error(err));
 }
+
 
 export const store = createStore(reducer, applyMiddleware(thunkMiddleware));
