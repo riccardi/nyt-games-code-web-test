@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(
+
   class Game extends Component {
     constructor(props) {
       super(props);
@@ -42,12 +43,16 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
           //If there is a match then we remove the cards and update the score
           setTimeout(() => {
             this.props.removeMatch();
+            // this.props.resetCardsClicked();
             this.props.updateScore();
           }, 1000);
         } else {
           //If not
           //They get a second to see them, then they are turned over
-          setTimeout(this.props.turnTwoCardsOver, 1000);
+          setTimeout(() => {
+            this.props.turnTwoCardsOver();
+            // this.props.resetCardsClicked();
+          }, 1000);
         }
       }
 
@@ -64,6 +69,11 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
             <span className={styles.pink}>r</span>
             <span className={styles.blue}>y</span>
           </h1>
+          <div id={styles.chooseDifficultyContainer}>
+            <h1>Select a Difficulty</h1>
+            <button>Easy</button>
+            <button>Hard</button>
+          </div>
           <div id={styles.scoreAndTimerContainer}>
             <div id={styles.scoreContainer}><h2>Score</h2><span id={styles.number}>{this.props.score}</span></div>
             <div id={styles.timerContainer}><h2>Timer</h2><Timer /></div>
@@ -71,7 +81,7 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
           <div id={styles.boardContainer}>
             {
               this.props.cards.map((card, id) =>
-              <Card key={id} card={card} index={id} updateScore={this.props.updateScore} flipCard={this.props.flipCard} cardsClicked={this.props.cardsClicked} />
+              <Card key={id} card={card} index={id} flipCard={this.props.flipCard} cardsClicked={this.props.cardsClicked} />
 
             )
           }

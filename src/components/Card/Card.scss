@@ -1,4 +1,4 @@
-/* INDIVIDUAL CARDS */
+
 .cardContainer {
   width:150px;
   height:150px;
@@ -40,18 +40,7 @@
   transform: rotateY(180deg);
 }
 
-
 .flipped {
-  -webkit-transition: 0.6s;
-  -webkit-transform-style: preserve-3d;
-  -moz-transition: 0.6s;
-  -moz-transform-style: preserve-3d;
-  transition: 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
-  width:100%;
-  height: 100%;
-
   -webkit-transform: rotateY( 180deg );
   -moz-transform: rotateY( 180deg );
   transform: rotateY( 180deg );
