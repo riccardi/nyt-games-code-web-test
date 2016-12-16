@@ -1,23 +1,9 @@
 $translucent_bg: rgba(237, 241, 241, .35);
 
-/* HEADER */
-.header {
-  font-family: 'Inconsolata', monospace;
-  font-weight: normal;
-  font-size: 64px;
-  display: inline-block;
-  letter-spacing: 8px;
-}
-
-.blue { color:#2A87D6; }
-.yellow { color: #FFC83F; }
-.green { color: #28D99F; }
-.red { color: #D94044; }
-.pink { color: #FF708E; }
 
 #chooseDifficultyContainer {
   color:white;
-  
+
   button {
   }
 
@@ -31,6 +17,26 @@ $translucent_bg: rgba(237, 241, 241, .35);
   justify-content: space-between;
   padding:60px 80px;
   flex-wrap: wrap;
+  z-index: 1;
+}
+
+#showGameOver {
+  z-index:2;
+  background-color: #9AAABB;
+  text-align: center;
+}
+
+#hideGameOver {
+  z-index: -10;
+  position: relative;
+}
+
+#showMessage {
+  display: block;
+}
+
+#hideMessage {
+  display: none;
 }
 
 /* SCORE AND TIMER CONTAINER */

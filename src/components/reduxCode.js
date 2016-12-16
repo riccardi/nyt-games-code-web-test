@@ -12,7 +12,9 @@ const initialState = {
     offBoard: false
   }],
   score: 0,
-  cardsClicked: []
+  cardsClicked: [],
+  difficulty: "easy",
+  time: 0
 };
 
 /* ACTIONS */
@@ -22,6 +24,9 @@ const FLIP_CARD = 'FLIP_CARD';
 const RESET_CARDS_CLICKED = 'RESET_CARDS_CLICKED';
 const TURN_TWO_CARDS_OVER = 'TURN_TWO_CARDS_OVER';
 const REMOVE_MATCH = 'REMOVE_MATCH';
+const SELECT_DIFFICULTY = 'SELECT_DIFFICULTY';
+const RESET_GAME_STATE = 'RESET_GAME_STATE';
+const SET_TIME = 'SET_TIME';
 
 
 
@@ -87,6 +92,30 @@ function reducer(state = initialState, action) {
       cardsClicked: []
     });
 
+    case SELECT_DIFFICULTY:
+    return Object.assign({}, state, {
+      difficulty: action.difficulty
+    })
+
+    case RESET_GAME_STATE:
+    return Object.assign({}, state, {
+      cards: [{
+        id: 0,
+        symbol: '',
+        flipped: false,
+        offBoard: false
+      }],
+      score: 0,
+      cardsClicked: [],
+      difficulty: "easy",
+      time: 0
+    });
+
+    case SET_TIME:
+    return Object.assign({}, state, {
+      time: action.time
+    })
+
     default:
     return state;
   }
@@ -119,13 +148,31 @@ export const removeMatch = () => ({
   type: REMOVE_MATCH
 });
 
+export const selectDifficulty = (difficulty) => ({
+  type: SELECT_DIFFICULTY,
+  difficulty
+})
+
+export const resetGameState = () => ({
+  type: RESET_GAME_STATE
+})
+
+export const setTime = (time) => ({
+  type: SET_TIME,
+  time
+})
+
 //a function that returns a function that takes dispatch as its argument
 //for thunk middleware which allows us to make async dispatch calls
-export const fetchCards = () => dispatch => {
+export const fetchCards = () => (dispatch, getState) => {
   axios.get('https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json')
   .then(({data}) => {
-
-    const cards = data.levels[0].cards.map((card, idx) => {
+    let difficultyIndex;
+    data.levels.forEach((level, idx) => {
+      //Should I really be using getState() here??
+      if (getState().difficulty === level.difficulty) difficultyIndex = idx;
+    })
+    const cards = data.levels[difficultyIndex].cards.map((card, idx) => {
       return {
         id: idx,
         symbol: card,

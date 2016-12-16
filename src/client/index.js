@@ -7,12 +7,26 @@ import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import App from './../components/App'
+import { Provider } from 'react-redux'
+import { store } from './../components/reduxCode'
+import { Router, hashHistory, Route, IndexRoute, IndexRedirect } from 'react-router'
+import Game from './../components/Game/Game.js'
+import BeginGame from './../components/BeginGame/BeginGame.js'
+import GameOver from './../components/GameOver/GameOver.js'
 
 const root = document.querySelector('#root')
 
 const mount = RootComponent => render(
   <AppContainer>
-    <RootComponent />
+      <Provider store={store}>
+        <Router history={hashHistory}>
+          <Route path="/" component={App}>
+            <Route path="/play" component={Game} />
+            <Route path="/game-over" component={GameOver} />
+            <IndexRoute component={BeginGame} />
+          </Route>
+        </Router>
+      </Provider>
   </AppContainer>,
   root
 )
