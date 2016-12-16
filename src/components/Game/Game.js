@@ -5,17 +5,21 @@ import Timer from '../Timer/Timer'
 import styles from './Game.scss'
 import { store, fetchCards, updateScore, flipCard, turnTwoCardsOver, resetCardsClicked, removeMatch } from '../reduxCode'
 import Card from '../Card/Card'
+import { Link } from 'react-router'
+import { hashHistory } from 'react-router';
+
 
 import { connect } from 'react-redux';
 
-const mapStateToProps = ({ cards, score, cardsClicked }) => ({
+const mapStateToProps = ({ cards, score, cardsClicked, gameOver }) => ({
   cards,
   score,
-  cardsClicked
+  cardsClicked,
+  gameOver
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCards: () => dispatch(fetchCards()),
+  getCards: (difficulty) => dispatch(fetchCards(difficulty)),
   flipCard: (card) => dispatch(flipCard(card)),
   updateScore: () => dispatch(updateScore()),
   resetCardsClicked: () => dispatch(resetCardsClicked()),
@@ -31,7 +35,8 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
     }
 
     componentDidMount() {
-      this.props.getCards();
+      console.log(this.props.params.difficulty);
+      this.props.getCards(this.props.params.difficulty);
     }
 
     componentDidUpdate() {
@@ -45,11 +50,17 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
             this.props.removeMatch();
             // this.props.resetCardsClicked();
             this.props.updateScore();
+
+            if(this.props.score === this.props.cards.length/2) {
+              //get what time was when user won
+              hashHistory.push('/game-over');
+            }
           }, 1000);
         } else {
           //If not
           //They get a second to see them, then they are turned over
           setTimeout(() => {
+            //should I move this setTimeout into action creator
             this.props.turnTwoCardsOver();
             // this.props.resetCardsClicked();
           }, 1000);
@@ -61,19 +72,6 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
     render() {
       return (
         <div>
-          <h1 className={styles.header}>
-            <span className={styles.blue}>M</span>
-            <span className={styles.yellow}>e</span>
-            <span className={styles.green}>m</span>
-            <span className={styles.red}>o</span>
-            <span className={styles.pink}>r</span>
-            <span className={styles.blue}>y</span>
-          </h1>
-          <div id={styles.chooseDifficultyContainer}>
-            <h1>Select a Difficulty</h1>
-            <button>Easy</button>
-            <button>Hard</button>
-          </div>
           <div id={styles.scoreAndTimerContainer}>
             <div id={styles.scoreContainer}><h2>Score</h2><span id={styles.number}>{this.props.score}</span></div>
             <div id={styles.timerContainer}><h2>Timer</h2><Timer /></div>
