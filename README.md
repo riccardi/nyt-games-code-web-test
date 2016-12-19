@@ -24,11 +24,5 @@ When reviewing your submission, the following criteria will be considered:
 
 ## Extra Credit
 As long as your app satisfies everything in the previous section, you should feel comfortable skipping this section. But if you find yourself with some time left over, here are some suggestions on ways you might extend your app and really make it stand out:
-- Save functionality to let the user exit and return mid-game
-- A scoring system beyond time spent solving
-- Additional modes of play (head-to-head, race-the-clock, etc.)
-- A leaderboard to record top solves
-- User-customizable card styles
-- Game sounds (and maybe a way to mute them)
+- Additional modes of play (Beat The Clock!)
 - Support for [three-card matches](https://web-code-test-dot-nyt-games-prd.appspot.com/triples.json)
-- Any other enhancements you might dream up that would showcase your creativity
