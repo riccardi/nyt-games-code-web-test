@@ -1,6 +1,10 @@
 # NYT Games Team Web Code Test
 
-Thank you for your interest in the NYT Games team! This exercise will help us get to know you a bit as an engineer. Your task is to create a playable version of the card-matching game Memory. Your app should fetch the game data found at this URL: https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json.
+Thank you for this opportunity! I had a blast building this!
+
+
+## Setup
+npm start is throwing an error but npm run dev should work fine!
 
 
 ## Code Test Guidelines
@@ -28,16 +32,3 @@ As long as your app satisfies everything in the previous section, you should fee
 - Game sounds (and maybe a way to mute them)
 - Support for [three-card matches](https://web-code-test-dot-nyt-games-prd.appspot.com/triples.json)
 - Any other enhancements you might dream up that would showcase your creativity
-
-## Setup
-To help you get started†, we’ve created this starter project based on [NYT kyt](https://github.com/NYTimes/kyt) that uses Webpack, Node, Babel, Express, React and Sass + CSS Modules, all of which are technologies we use internally. Feel free to extend the `package.json` with any other packages that you might want to extend the app’s functionality (for data fetching, state handling, etc.).
-
-Clone this repo and run `npm install`, then `npm run dev` to start up the development server. Once it’s running, you can view the app at `localhost:3000`††.
-
-If you’re looking for somewhere to start, a good place to dive in is `Game.js`, where we’ve left a placeholder `<div>` for your game. Good luck! We look forward to playing your game.
-
----
-
-†You are welcome to use your own setup if you prefer, but be sure to track your changes through git either way. We are interested in your journey as well as your destination. When you're finished, please zip up the project folder and send it to the address provided in your invitation. Replace the contents of this Readme file with any special installation instructions or general comments about the app not specifically called out in your code.
-
-††See the `scripts` in `package.json` for more commands you can run.
