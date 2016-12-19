@@ -1,7 +1,8 @@
 
 .cardContainer {
-  width:150px;
-  height:150px;
+   width: calc(100% * (1/4) - 10px - 1px);
+  max-width: 200px;
+  height:200px;
   position: relative;
   z-index: 1;
   margin-bottom:20px;

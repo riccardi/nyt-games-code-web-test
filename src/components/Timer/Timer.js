@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import styles from './Timer.scss'
 
-import { setTime } from '../../redux/action-creators/time'
-import { connect } from 'react-redux';
+import { setTime } from '../../redux/action-creators'
+import { connect } from 'react-redux'
+import { hashHistory } from 'react-router'
 
 const mapDispatchToProps = (dispatch) => ({
   setTime: (time) => dispatch(setTime(time))
@@ -30,7 +31,7 @@ Timer.propTypes = {
   time: React.PropTypes.number,
 }
 
-//I should probably incorporate this better
+//I should probably incorporate this in a better way
 const TimerContainer = connect(null, mapDispatchToProps)(
   class TimerContainer extends Component {
 
@@ -42,7 +43,15 @@ const TimerContainer = connect(null, mapDispatchToProps)(
     }
 
     componentDidMount() {
-      this.interval = setInterval(this.tick.bind(this), 1000)
+      if (this.props.startTime) {
+        this.setState({
+          secondsElapsed: this.props.startTime
+        });
+        this.interval = setInterval(this.tickDown.bind(this), 1000)
+      } else {
+        this.interval = setInterval(this.tick.bind(this), 1000)
+      }
+
     }
 
     componentWillUnmount() {
@@ -54,6 +63,16 @@ const TimerContainer = connect(null, mapDispatchToProps)(
       this.setState({
         secondsElapsed: this.state.secondsElapsed + 1,
       })
+    }
+
+    tickDown() {
+      if (this.state.secondsElapsed === 0) {
+        hashHistory.push('/game-over')
+      } else {
+        this.setState({
+          secondsElapsed: this.state.secondsElapsed - 1,
+        })
+      }
     }
 
     render() {

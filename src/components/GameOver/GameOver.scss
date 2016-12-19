@@ -1,7 +1,23 @@
 #gameOver {
   text-align: center;
-  
+
+  h1, p {
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+  }
+
+  h1 {
+    font-size: 40px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+  }
+
+  p {
+    font-size:20px;
+  }
+
   button {
-    margin-top:20px;
+    margin-top:50px;
   }
 }
