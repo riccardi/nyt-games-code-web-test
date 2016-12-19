@@ -57,6 +57,7 @@ function reducer(state = initialState, action) {
           flipped: true
         });
       }),
+      //I should probable place this logic in the onClick handler where I call flip card
       cardsClicked: (state.cardsClicked.includes(action.card.id)) ? state.cardsClicked : [...state.cardsClicked, action.card.id]
     });
 

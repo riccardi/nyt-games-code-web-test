@@ -30,6 +30,7 @@ Timer.propTypes = {
   time: React.PropTypes.number,
 }
 
+//I should probably incorporate this better
 const TimerContainer = connect(null, mapDispatchToProps)(
   class TimerContainer extends Component {
 
