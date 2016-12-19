@@ -1,0 +1,26 @@
+#chooseDifficultyContainer {
+  text-align: center;
+
+
+}
+
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+}
+
+button {
+  border: none;
+  background-color:white;
+  border-radius: 2px;
+  padding:8px 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-size:16px;
+  text-transform: uppercase;
+  margin-right:10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color:#ccc;
+}

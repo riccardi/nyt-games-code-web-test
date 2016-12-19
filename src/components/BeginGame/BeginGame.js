@@ -33,7 +33,6 @@ const BeginGame = connect(null, mapDispatchToProps)(
         <h1>Select a Difficulty</h1>
         <button onClick={(evt) => { this.handleSelectDifficulty(evt, "easy") }}>Easy</button>
         <button onClick={(evt) => { this.handleSelectDifficulty(evt, "hard") }}>Hard</button>
-        <Link to="/play">Play</Link>
         </div>
       )
     }
