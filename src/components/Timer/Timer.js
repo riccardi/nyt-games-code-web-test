@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './Timer.scss'
 
-import { setTime } from '../reduxCode'
+import { setTime } from '../../redux/action-creators/time'
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => ({

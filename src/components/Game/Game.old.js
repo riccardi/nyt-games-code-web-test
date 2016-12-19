@@ -1,55 +1,54 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import styles from './Game.scss'
+
 import Timer from '../Timer/Timer'
+import styles from './Game.scss'
+import { store, fetchCards, updateScore, flipCard, turnTwoCardsOver, resetCardsClicked, removeMatch } from '../reduxCode'
 import Card from '../Card/Card'
 import { Link } from 'react-router'
-import { hashHistory } from 'react-router'
+import { hashHistory } from 'react-router';
 
-import { cards, cardsClicked, score } from '../../redux/store'
-import { fetchCards, flipCard, turnTwoCardsOver, removeMatch } from '../../redux/action-creators/cards'
-import { addCardToCardsClicked, resetCardsClicked } from '../../redux/action-creators/cardsClicked'
-import { updateScore } from '../../redux/action-creators/score'
 
 import { connect } from 'react-redux';
 
-const mapStateToProps = ({ cards, cardsClicked, score }) => ({
+const mapStateToProps = ({ cards, score, cardsClicked, gameOver }) => ({
   cards,
+  score,
   cardsClicked,
-  score
+  gameOver
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCards: () => dispatch(fetchCards()),
+  getCards: (difficulty) => dispatch(fetchCards(difficulty)),
   flipCard: (card) => dispatch(flipCard(card)),
-  turnTwoCardsOver: (cardsClicked) => dispatch(turnTwoCardsOver(cardsClicked)),
-  removeMatch: (cardsClicked) => dispatch(removeMatch(cardsClicked)),
-  addCardToCardsClicked: (cardId) => dispatch(addCardToCardsClicked(cardId)),
+  updateScore: () => dispatch(updateScore()),
   resetCardsClicked: () => dispatch(resetCardsClicked()),
-  updateScore: () => dispatch(updateScore())
+  turnTwoCardsOver: () => dispatch(turnTwoCardsOver()),
+  removeMatch: () => dispatch(removeMatch())
 });
 
 const Game = connect(mapStateToProps, mapDispatchToProps)(
 
   class Game extends Component {
     constructor(props) {
-      super(props)
-      this.handleCardClick = this.handleCardClick.bind(this)
+      super(props);
     }
 
     componentDidMount() {
-      this.props.getCards()
+      console.log(this.props.params.difficulty);
+      this.props.getCards(this.props.params.difficulty);
     }
 
     componentDidUpdate() {
+
       //After user clicks on two cards
       if (this.props.cardsClicked.length === 2) {
         //We must check for a match
         if(this.props.cards[this.props.cardsClicked[0]].symbol === this.props.cards[this.props.cardsClicked[1]].symbol) {
           //If there is a match then we remove the cards and update the score
           setTimeout(() => {
-            this.props.removeMatch(this.props.cardsClicked);
-            this.props.resetCardsClicked();
+            this.props.removeMatch();
+            // this.props.resetCardsClicked();
             this.props.updateScore();
 
             if(this.props.score === this.props.cards.length/2) {
@@ -61,21 +60,13 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
           //If not
           //They get a second to see them, then they are turned over
           setTimeout(() => {
-            this.props.turnTwoCardsOver(this.props.cardsClicked);
-            this.props.resetCardsClicked();
+            //should I move this setTimeout into action creator
+            this.props.turnTwoCardsOver();
+            // this.props.resetCardsClicked();
           }, 1000);
         }
       }
-    }
 
-    handleCardClick(e, card) {
-      e.preventDefault();
-      //User can only flip over two cards at a time
-      //User cannot flip over a card that was already flipped and cannot flip over a card that is off the board
-      if (this.props.cardsClicked.length < 2 && !card.offBoard && !this.props.cardsClicked.includes(card.id)) {
-        this.props.flipCard(card);
-        this.props.addCardToCardsClicked(card.id);
-      }
     }
 
     render() {
@@ -88,13 +79,10 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
           <div id={styles.boardContainer}>
             {
               this.props.cards.map((card, id) =>
-              <Card
-                key={id}
-                card={card}
-                handleCardClick={this.handleCardClick}
-                />
-              )
-            }
+              <Card key={id} card={card} index={id} flipCard={this.props.flipCard} cardsClicked={this.props.cardsClicked} />
+
+            )
+          }
         </div>
       </div>
     )

@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './GameOver.scss'
 import { Link } from 'react-router'
-import { score, time, resetGameState } from '../reduxCode'
+import { score, time } from '../../redux/store'
+import { resetGameState } from '../../redux/action-creators/reset'
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 
