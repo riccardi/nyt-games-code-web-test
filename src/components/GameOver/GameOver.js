@@ -29,7 +29,7 @@ const GameOver = connect(mapStateToProps, mapDispatchToProps)(
 
     render() {
       return (
-        <div>
+        <div id={styles.gameOver}>
         <h1>You won!</h1>
         <p>Your score was {this.props.score}</p>
         <p>Your time was {this.props.time}</p>

@@ -45,7 +45,7 @@ const TimerContainer = connect(null, mapDispatchToProps)(
     }
 
     componentWillUnmount() {
-      this.props.setTime(this.state.secondsElapsed)
+      this.props.setTime(formatTime(this.state.secondsElapsed))
       clearInterval(this.interval)
     }
 

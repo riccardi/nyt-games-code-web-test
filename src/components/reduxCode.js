@@ -121,7 +121,7 @@ function reducer(state = initialState, action) {
   }
 }
 
-/* DISPATCHERS */
+/* ACTION CREATORS */
 export const receiveCards = (cards) => ({
   type: RECEIVE_CARDS,
   cards

@@ -18,7 +18,8 @@ app.get('/', (req, res) => {
       <body>
         <div id='root'></div>
         <script src='${clientAssets.main.js}' type="text/javascript"></script>
-        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Space+Mono|Inconsolata" rel="stylesheet">
         <link href="${clientAssets.main.css || ''}" rel="stylesheet" type="text/css"/>
       </body>
     </html>
