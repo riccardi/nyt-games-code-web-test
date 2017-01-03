@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router'
 import styles from './BeginGame.scss'
-import { selectDifficulty } from '../../redux/action-creators.js'
+import { selectDifficulty, resetGameState } from '../../redux/action-creators.js'
 import { connect } from 'react-redux'
 import { hashHistory } from 'react-router'
 
 const mapDispatchToProps = (dispatch) => ({
-  selectDifficulty: (difficulty) => dispatch(selectDifficulty(difficulty))
+  selectDifficulty: (difficulty) => dispatch(selectDifficulty(difficulty)),
+  resetGameState: () => dispatch(resetGameState())
 });
 
 const BeginGame = connect(null, mapDispatchToProps)(
