@@ -42,7 +42,7 @@ function reducer(state = initialState, action) {
           flipped: true
         });
       }),
-      cardsClicked: (state.cardsClicked.includes(action.card.id)) ? state.cardsClicked : [...state.cardsClicked, action.card.id]
+      cardsClicked: [...state.cardsClicked, action.card.id]
     });
 
     case RESET_CARDS_CLICKED:
@@ -91,7 +91,6 @@ function reducer(state = initialState, action) {
       }],
       score: 0,
       cardsClicked: [],
-      difficulty: "easy",
       time: 0
     });
 

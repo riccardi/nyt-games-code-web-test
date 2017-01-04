@@ -42,6 +42,7 @@ export const setTime = (time) => ({
 //for thunk middleware which allows us to make async dispatch calls
 export const fetchCards = (difficulty) => (dispatch, getState) => {
   if (difficulty === 'triples') {
+    console.log('in triples in fetchCards')
     axios.get('https://web-code-test-dot-nyt-games-prd.appspot.com/triples.json')
     .then(({data}) => {
       dispatch(receiveCards(data.cards));

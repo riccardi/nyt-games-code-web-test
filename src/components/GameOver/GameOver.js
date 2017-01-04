@@ -33,7 +33,7 @@ const GameOver = connect(mapStateToProps, mapDispatchToProps)(
       let message = (this.props.difficulty === 'beatTheClock') ? 'Time left ' : 'Your time was '
       return (
         <div id={styles.gameOver}>
-          <h1>{winOrLose}!</h1>
+          <h1>{winOrLose}</h1>
           <p>Your score was {this.props.score}</p>
           <p>{message} {this.props.time}</p>
           <button onClick={this.handlePlayAgain}>Play again</button>

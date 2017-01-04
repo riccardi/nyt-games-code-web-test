@@ -1,5 +1,5 @@
 import reducer from './reducer'
-import { RECEIVE_CARDS, FLIP_CARD, TURN_TWO_CARDS_OVER, REMOVE_MATCH } from './constants'
+import { RECEIVE_CARDS, FLIP_CARD, TURN_CARDS_OVER, REMOVE_MATCH } from './constants'
 
 const initialState = {
   cards: [{
@@ -131,10 +131,10 @@ describe('reducer', () => {
     cardsClicked: [0,1]
   }
 
-  it('TURN_TWO_CARDS_OVER should receive two cards and change flipped for both to false. It should also reset cardsClicked', () => {
+  it('TURN_CARDS_OVER should receive two cards and change flipped for both to false. It should also reset cardsClicked', () => {
     expect(
       reducer(stateWithTwoCardsFaceUp, {
-        type: TURN_TWO_CARDS_OVER,
+        type: TURN_CARDS_OVER,
         cardsClicked: [0,1]
       })
     ).toEqual(
@@ -148,6 +148,63 @@ describe('reducer', () => {
           },
           {
             id: 1,
+            symbol: "♘",
+            flipped: false,
+            offBoard: false
+          }
+        ],
+        cardsClicked: []
+      }
+    )
+  })
+
+  let stateWithThreeCardsFaceUp = {
+    cards: [
+      {
+        id: 0,
+        symbol: "✈",
+        flipped: true,
+        offBoard: false
+      },
+      {
+        id: 1,
+        symbol: "♘",
+        flipped: true,
+        offBoard: false
+      },
+      {
+        id: 2,
+        symbol: "♘",
+        flipped: true,
+        offBoard: false
+      }
+    ],
+    cardsClicked: [0,1,2]
+  }
+
+  it('TURN_CARDS_OVER should receive three cards and change flipped for both to false. It should also reset cardsClicked', () => {
+    expect(
+      reducer(stateWithThreeCardsFaceUp, {
+        type: TURN_CARDS_OVER,
+        cardsClicked: [0,1,2]
+      })
+    ).toEqual(
+      {
+        cards: [
+          {
+            id: 0,
+            symbol: "✈",
+            flipped: false,
+            offBoard: false
+          },
+          {
+            id: 1,
+            symbol: "♘",
+            flipped: false,
+            offBoard: false
+          },
+          {
+            id: 2,
             symbol: "♘",
             flipped: false,
             offBoard: false
@@ -193,6 +250,62 @@ describe('reducer', () => {
         {
           id: 1,
           symbol: "♘",
+          flipped: true,
+          offBoard: true
+        }
+      ],
+      cardsClicked: []
+    }
+    )
+  })
+
+  let stateWithThreeCardsOnBoard = {
+    cards: [
+      {
+        id: 0,
+        symbol: "✈",
+        flipped: true,
+        offBoard: false
+      },
+      {
+        id: 1,
+        symbol: "♘",
+        flipped: true,
+        offBoard: false
+      },
+      {
+        id: 2,
+        symbol: "✈",
+        flipped: true,
+        offBoard: false
+      }
+    ],
+    cardsClicked: [0,1,2]
+  }
+
+  it('REMOVE_MATCH should receive three cards and change offBoard for all to true. It should also reset cardsClicked', () => {
+    expect(
+      reducer(stateWithThreeCardsOnBoard, {
+        type: REMOVE_MATCH,
+        cardsClicked: [0,1,2]
+      })
+    ).toEqual({
+      cards: [
+        {
+          id: 0,
+          symbol: "✈",
+          flipped: true,
+          offBoard: true
+        },
+        {
+          id: 1,
+          symbol: "♘",
+          flipped: true,
+          offBoard: true
+        },
+        {
+          id: 2,
+          symbol: "✈",
           flipped: true,
           offBoard: true
         }

@@ -54,9 +54,7 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
 
     componentDidUpdate() {
       //After user clicks on cards
-      let len = 2;
-      if (this.props.difficulty === 'triples') len = 3
-
+      let len = this.props.difficulty === 'triples' ? 3 : 2
       if (this.props.cardsClicked.length === len) {
         //We must check for a match
         if(this.checkForMatch()) {
@@ -78,10 +76,9 @@ const Game = connect(mapStateToProps, mapDispatchToProps)(
 
     handleCardClick(e, card) {
       e.preventDefault();
-      //User can only flip over two cards at a time
+      //User can only flip over two cards at a time (or three is difficulty is triples)
       //User cannot flip over a card that was already flipped and cannot flip over a card that is off the board
-      let len = 2;
-      if (this.props.difficulty === 'triples') len = 3
+      let len = this.props.difficulty === 'triples' ? 3 : 2
       if (this.props.cardsClicked.length < len && !card.offBoard && !this.props.cardsClicked.includes(card.id)) this.props.flipCard(card)
     }
 
